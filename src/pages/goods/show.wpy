@@ -1,0 +1,811 @@
+<style lang="less">
+  .container {
+    background-color: #F2f2f2;
+    min-height: 100%;
+    padding-bottom: 100rpx;
+  }
+  .swiper-container{
+    width: 100%;
+    position: relative;
+  }
+  .swiper_box {
+    width: 100%;
+    height:748rpx;
+  }
+
+  swiper-item image {
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    height:748rpx;
+  }
+  .swiper-container .dots{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20rpx;
+    display: flex;
+    justify-content: center;
+  }
+  .swiper-container .dots .dot{
+    margin: 0 8rpx;
+    width: 14rpx;
+    height: 14rpx;
+    background: #000;
+    border-radius: 50%;
+    transition: all .6s;
+    opacity: .3;
+  }
+  .swiper-container .dots .dot.active{
+    opacity: .6;
+  }
+  .goods-info{
+    background-color: #fff;
+    padding: 35rpx 0;
+    margin-bottom: 24rpx;
+    width: 100%;
+    position: relative;
+  }
+
+  .goods-info-fx {
+    position: absolute;
+    width: 50px;
+    height: 60px;
+    right: 0;
+    top: 0;
+  }
+
+  .goods-info-fx button {
+    position: absolute;
+    width: 50px;
+    height: 60px;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0;
+  }
+
+  .goods-info-fx image {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    margin: 10px 10px 0 5px;
+  }
+
+  .goods-info-fx text {
+    position: absolute;
+    bottom: 3px;
+    left: 0;
+    z-index: 1;
+    font-size: 10px;
+    text-align: center;
+  }
+  .goods-info .goods-title{
+    box-sizing: border-box;
+    padding: 0 35rpx;
+    font-size: 32rpx;
+    line-height: 1.4;
+    color: #000;
+    margin-bottom: 28rpx;
+    padding-right: 60px;
+  }
+  .goods-info .goods-share{
+    box-sizing: border-box;
+    padding: 0 35rpx;
+    font-size: 25rpx;
+    line-height: 1.4;
+    color: #CC0000;
+    margin-bottom: 28rpx;
+  }
+  .goods-info .goods-price{
+     box-sizing:border-box;
+     color:#e64340;
+     font-size: 28rpx;
+     font-weight: bold;
+     width: 30%;
+     float:left;
+  }
+  .row-arrow{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0  120rpx 0 35rpx;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 102rpx;
+    font-size: 28rpx;
+    line-height: 102rpx;
+    margin-bottom: 28rpx;
+    background: #fff url(https://cdn.it120.cc/images/weappshop/arrow-right.png) no-repeat 697rpx center;
+    background-size: 18rpx auto;
+  }
+  .goods-des-info{
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+  }
+  .label-title{
+    font-size:28rpx;
+    color:#000000;
+    padding: 30rpx;
+  }
+  .goods-text{
+    padding: 0 10rpx;
+    font-size:28rpx;
+    color:#666666;
+    line-height: 56rpx;
+    margin-bottom: 30rpx;
+  }
+  .des-imgs{
+    width:100%;
+  }
+  .des-imgs image{
+    width: 100%;
+  }
+  .footer-box{
+    width: 100%;
+    height: 100rpx;
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    box-shadow:0 0 8rpx 0 ;
+  }
+  .footer-box .contact {
+    position: relative;
+    width: 120rpx;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*line-height: 100rpx;
+    text-align: center;
+    padding-top: 26rpx;*/
+    font-size: 20rpx;
+    color: #008000;
+    box-sizing: border-box;
+    background: url("https://cdn.it120.cc/images/weappshop/kefu.png") no-repeat center 21rpx;
+    background-size: 55rpx auto;
+  }
+  .footer-box .shop-cart-btn {
+    position: relative;
+    /*width: 135rpx;*/
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 20rpx;
+    color: #acacb7;
+    box-sizing: border-box;
+    background: url("https://cdn.it120.cc/images/weappshop/cart.png") no-repeat center 21rpx;
+    background-size: 44rpx auto;
+  }
+  .footer-box .shop-cart-btn .shop-num{
+    position: absolute;
+    color:#e64340;
+    left: 85rpx;
+    top:10rpx;
+  }
+  .footer-box .join-shop-cart{
+    text-align: center;
+    /*width: 250rpx;*/
+    flex: 1;
+    height: 100%;
+    line-height: 100rpx;
+    background-color: #ff6850;
+    color:#fff;
+    font-size: 34rpx;
+  }
+  .footer-box .now-buy{
+    text-align: center;
+    height: 100%;
+    /*width: 250rpx;*/
+    flex: 1;
+    line-height: 100rpx;
+    background-color: #e64340;
+    color:#fff;
+    font-size: 34rpx;
+  }
+  .show-popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    z-index: 4;
+  }
+  .popup-mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+  }
+  .popup-contents{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width:100%;
+    background-color: #fff;
+    z-index: 6;
+  }
+  .pop-goods-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 30rpx;
+    padding: 30rpx 0;
+    border-bottom: 1px solid #eee;
+  }
+  .pop-img-box{
+    width: 120rpx;
+    height: 120rpx;
+    overflow: hidden;
+    margin-right: 26rpx;
+  }
+  .pop-img-box .goods-thumbnail{
+    width: 120rpx;
+    height: 120rpx;
+  }
+  .pop-goods-title{
+    width: 484rpx;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size:26rpx;
+    color:#000000;
+  }
+  .pop-goods-price{
+    font-size:26rpx;
+    color:#e64340;
+    margin-top:20rpx;
+  }
+  .pop-goods-close{
+    width: 36rpx;
+    height: 36rpx;
+    flex: 1;
+    background:url("https://cdn.it120.cc/images/weappshop/popup-close.png") no-repeat center center;
+    background-size: 36rpx auto;
+    align-self: flex-start;
+    margin-top: -10rpx;
+  }
+  .size-label-box  .label{
+    font-size:26rpx;
+    color:#000;
+    padding-left: 30rpx;
+    padding: 30rpx 0 20rpx 30rpx;
+  }
+  .size-label-box .label-item-box{
+    display: flex;
+    margin-left: 30rpx;
+    flex-direction: row;
+    flex-wrap:wrap;
+  }
+  .size-label-box .label-item{
+    font-size:26rpx;
+    color:#000;
+    padding: 14rpx 20rpx;
+    border: 1px solid #ddd;
+    border-radius: 6rpx;
+    margin: 0 20rpx 20rpx 0;
+  }
+  .size-label-box .label-item.active{
+    color: #e64340;
+    border: 1px solid #e64340;
+  }
+  .buy-num-box{
+     display: flex;
+     justify-content: space-between;
+     padding: 30rpx 30rpx 48rpx 0;
+     margin-left: 30rpx;
+     border-top: 1px solid #eee;
+     margin-top: 30rpx;
+     align-items: center;
+  }
+  .num-label{
+    font-size:26rpx;
+    color:#000000;
+  }
+  .buy-num-box .num-box{
+       display: flex;
+  }
+  .buy-num-box .num-box .num-jian,
+  .buy-num-box .num-box .num-input,
+  .buy-num-box .num-box .num-jia{
+    width: 80rpx;
+    height: 64rpx;
+    line-height: 62rpx;
+    text-align: center;
+    border: 1px solid #eee;
+  }
+  .buy-num-box .num-box .num-input{
+    font-size: 28rpx;
+  }
+  .buy-num-box .num-box .num-input input{
+    height: 100%;
+  }
+  .popup-join-btn{
+    width: 100%;
+    height: 89rpx;
+    text-align: center;
+    line-height: 89rpx;
+    font-size:34rpx;
+    color:#ffffff;
+    background-color: #e64340;
+  }
+  .buy-num-box .num-box .hui{
+    background-color: #f5f5f9;
+  }
+</style>
+<template>
+  <view class="container">
+    <!-- 商品 banner -->
+    <view class="swiper-container">
+      <swiper class="swiper_box" autoplay="{{ autoplay }}" interval="{{ interval }}" duration="{{ duration }}">
+        <swiper-item>
+          <image src="{{ good.image_url }}" class="slide-image" width="355" height="150" mode="aspectFit" lazy-load="true"/>
+        </swiper-item>
+      </swiper>
+        <view class="dots">
+          <view class="dot active"></view>
+        </view>
+    </view>
+
+    <!-- 商品基本信息 -->
+    <view class="goods-info">
+      <view class="goods-title">{{ good.title }}</view>
+      <!-- <view class="goods-price" style="color:#999;font-size:24rpx;">购买{{ goodsDetail.basicInfo.numberOrders }}次</view>
+      <view class="goods-price" style="color:#999;font-size:24rpx;">共收到 {{ goodsDetail.basicInfo.numberGoodReputation }} 次好评</view> -->
+    </view>
+    <!-- 商品介绍 -->
+    <view class="goods-des-info">
+      <view class="label-title">商品介绍</view>
+      <view class="goods-text">
+        <rich-text nodes="{{ good.description }}</p>"></rich-text>
+      </view>
+    </view>
+
+    <!-- 页面底部导航 -->
+    <view class="footer-box">
+      <view class="shop-cart-btn" @tap="goShopCart()">
+        <view class="shop-num">({{ cartNum }})</view>
+        <view style='position:absolute;bottom:10rpx;'> 购物车 </view>
+      </view>
+      <view class="join-shop-cart" @tap="toAddShopCart()">加入购物车</view>
+      <view class="now-buy" @tap="tobuy()">立即购买</view>
+    </view>
+
+    <!-- 加入购物车页面 -->
+    <view class="show-popup" hidden="{{ hideShopPopup }}" >
+      <view class="popup-mask" @tap="closePopupTap()"></view>
+      <view class="popup-contents">
+        <view class="pop-goods-info">
+          <view class="pop-img-box">
+              <image src="{{ good.image_url }}" class="goods-thumbnail"/>
+          </view>
+          <view class="pop-goods-des">
+              <view class="pop-goods-title">{{good.title }}</view>
+              <view class="pop-goods-price">¥ {{ price }}</view>
+          </view>
+          <view class="pop-goods-close" @tap="closePopupTap()"></view>
+        </view>
+
+        <!-- 商品规格 -->
+        <!-- <view class="size-label-box">
+          <block wx:for="{{goodsDetail.properties}}" wx:for-item="property" wx:for-index="idx" wx:key="id">
+          <view class="label">{{property.name}}</view>
+          <view class="label-item-box">
+              <view class="label-item {{item.active ? 'active' : '' }}" wx:for="{{property.childsCurGoods}}" wx:key="id" @tap="labelItemTap()" data-propertyindex="{{idx}}" data-propertyid="{{property.id}}" data-propertyname="{{property.name}}" data-propertychildindex="{{index}}" data-propertychildid="{{item.id}}" data-propertychildname="{{item.name}}">
+                  {{item.name}}
+              </view>
+          </view>
+          </block>
+        </view> -->
+
+        <view class="buy-num-box">
+          <view class="num-label">购买数量</view>
+          <view class="num-box">
+              <view class="num-jian {{ buyNumber == buyNumMin ? 'hui': '' }}" @tap="numJianTap()">-</view>
+              <view class="num-input">
+                 <input  type="number" value="{{ buyNumber }}" @input="bindBuyNumber"/>
+              </view>
+              <view class="num-jia {{ buyNumber == buyNumMax ? 'hui': '' }}" @tap="numJiaTap()">+</view>
+          </view>
+        </view>
+        <view class="popup-join-btn" wx:if="{{ shopType == 'addShopCar' }}" @tap="addShopCart()">
+          加入购物车
+        </view>
+        <view class="popup-join-btn" wx:if="{{ shopType == 'tobuy' }}" @tap="buyNow()">
+          立即购买
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import api from '@/utils/api'
+
+export default class GoodDetailIndex extends wepy.page {
+  config = {
+    navigationBarTitleText: '商品详情',
+    navigationBarBackgroundColor: '#fafafa'
+  }
+
+  data = {
+    // 商品 ID
+    id: null,
+    // 商品详情
+    good: {},
+    goodsDetail: {},
+    // banner 设置相关
+    autoplay: true,
+    interval: 3000,
+    duration: 1000,
+    // 购物车商品
+    cartItems: [],
+    // 商品价格
+    selectSizePrice: 0,
+    hideShopPopup: true,
+    shopType: 'addShopCar',
+    // 购买（加入购物车）相关
+    buyNumber: 0,
+    buyNumMin: 1,
+    buyNumMax: 99999,
+    canSubmit: false //  选中规格尺寸时候是否允许加入购物车
+  }
+
+  computed = {
+    cartNum() {
+      return this.cartItems.length || 0
+    }
+  }
+
+  methods = {
+    // 加入购物车（页面显示）
+    toAddShopCart() {
+      this.shopType = 'addShopCar'
+      this.hideShopPopup = false
+    },
+    // 立即购买（页面显示）
+    tobuy() {
+      this.shopType = 'tobuy'
+      this.hideShopPopup = false
+    },
+    closePopupTap() {
+      this.hideShopPopup = true
+    },
+    numJianTap() {
+      if (this.buyNumber > this.buyNumMin) {
+        this.buyNumber --
+      }
+    },
+    numJiaTap() {
+      if (this.buyNumber < this.buyNumMax) {
+        this.buyNumber ++
+      }
+    },
+    // 商品数量输入
+    bindBuyNumber(e) {
+      this.buyNumber = e.detail.value
+    },
+    // 加入购物车（数据操作）
+    async addShopCart() {
+      if (this.buyNumber < 0) {
+        wepy.showModal({
+          title: '提示',
+          content: '购买数量不能为0！',
+          showCancel: false
+        })
+        return
+      }
+
+      // 提交数据
+      let cartResponse = await api.authRequest({
+        url: 'cart',
+        method: 'POST',
+        data: {
+          number: this.buyNumber,
+          product_id: this.id,
+          include: 'product'
+        }
+      })
+
+      // 更新缓存数据
+      if (cartResponse.statusCode === 200) {
+        let cartItems = cartResponse.data.data
+
+        wepy.setStorageSync('cartItems', cartItems)
+        this.cartItems = cartItems
+
+        // 隐藏购物车页面
+        this.hideShopPopup = true
+
+        this.$apply()
+
+        wepy.showToast({
+          title: '加入购物车成功',
+          icon: 'success',
+          duration: 2000
+        })
+      } else {
+        wepy.showToast({
+          title: '加入购物车成功',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    },
+    // 立即购买 (数据操作)
+    buyNow() {
+      if (this.buyNumber < 0) {
+        wepy.showModal({
+          title: '提示',
+          content: '购买数量不能为0！',
+          showCancel: false
+        })
+        return
+      }
+
+      // 组件购买商品的信息
+      // 存入缓存中
+
+      // 跳转到结算页面
+      wepy.navigateTo({
+        url: '/pages/to-pay-order/index?orderType=buyNow'
+      })
+    },
+    // 购物车
+    goShopCart() {
+      wepy.reLaunch({
+        url: '/pages/shop-cart/index'
+      })
+    }
+  }
+
+  async onLoad(options) {
+    this.id = options.id
+    // 获取商品详情
+    await this.getGood(this.id)
+
+    // 商品详情
+    let goodsDetail = {
+      'logistics': {
+        'isFree': true,
+        'feeType': 0,
+        'feeTypeStr': '按件数',
+        'details': [
+          {
+            'addAmount': 0.00,
+            'addNumber': 1,
+            'firstAmount': 8.00,
+            'firstNumber': 100,
+            'type': 0,
+            'userId': 951
+          }
+        ]
+      },
+      'extJson': {
+
+      },
+      'category': {
+        'dateAdd': '2017-09-12 11:07:32',
+        'icon': '',
+        'id': 1872,
+        'isUse': true,
+        'key': '1',
+        'name': '上装',
+        'paixu': 0,
+        'pid': 0,
+        'type': '',
+        'userId': 951
+      },
+      'pics': [
+        {
+          'goodsId': 4189,
+          'id': 24411,
+          'pic': 'https://cdn.it120.cc/apifactory/2017/09/18/3d785c3879a0c3aa2b8b864f691c3730.jpg'
+        },
+        {
+          'goodsId': 4189,
+          'id': 24412,
+          'pic': 'https://cdn.it120.cc/apifactory/2017/09/18/53c7344336b7d3ae795f6db8e6c52d0f.jpg'
+        },
+        {
+          'goodsId': 4189,
+          'id': 24413,
+          'pic': 'https://cdn.it120.cc/apifactory/2017/09/18/8e1ad86f3bd638d35b6d7b95123d11dd.jpg'
+        }
+      ],
+      'properties': [
+        {
+          'childsCurGoods': [
+            {
+              'dateAdd': '2017-09-14 09:34:13',
+              'id': 1639,
+              'name': '5',
+              'paixu': 0,
+              'propertyId': 870,
+              'remark': '',
+              'userId': 951
+            },
+            {
+              'dateAdd': '2017-09-14 09:34:17',
+              'id': 1640,
+              'name': '7',
+              'paixu': 0,
+              'propertyId': 870,
+              'remark': '',
+              'userId': 951
+            },
+            {
+              'dateAdd': '2017-09-14 09:34:21',
+              'id': 1641,
+              'name': '9',
+              'paixu': 0,
+              'propertyId': 870,
+              'remark': '',
+              'userId': 951
+            },
+            {
+              'dateAdd': '2017-09-14 09:34:25',
+              'id': 1642,
+              'name': '11',
+              'paixu': 0,
+              'propertyId': 870,
+              'remark': '',
+              'userId': 951
+            },
+            {
+              'dateAdd': '2017-09-14 09:34:32',
+              'id': 1644,
+              'name': '13',
+              'paixu': 0,
+              'propertyId': 870,
+              'remark': '',
+              'userId': 951
+            },
+            {
+              'dateAdd': '2017-09-14 09:34:45',
+              'id': 1646,
+              'name': '15',
+              'paixu': 0,
+              'propertyId': 870,
+              'remark': '',
+              'userId': 951
+            },
+            {
+              'dateAdd': '2017-09-16 14:46:12',
+              'id': 1704,
+              'name': '5',
+              'paixu': 0,
+              'propertyId': 870,
+              'remark': '',
+              'userId': 951
+            }
+          ],
+          'dateAdd': '2017-09-12 20:59:10',
+          'id': 870,
+          'name': '尺码',
+          'paixu': 0,
+          'userId': 951
+        },
+        {
+          'childsCurGoods': [
+            {
+              'dateAdd': '2017-09-13 10:10:40',
+              'id': 1605,
+              'name': '藏青色',
+              'paixu': 0,
+              'propertyId': 871,
+              'remark': '',
+              'userId': 951
+            },
+            {
+              'dateAdd': '2017-09-13 13:12:49',
+              'id': 1623,
+              'name': '兰色',
+              'paixu': 0,
+              'propertyId': 871,
+              'remark': '',
+              'userId': 951
+            }
+          ],
+          'dateAdd': '2017-09-12 21:03:40',
+          'id': 871,
+          'name': '颜色',
+          'paixu': 0,
+          'userId': 951
+        }
+      ],
+      'basicInfo': {
+        'categoryId': 1872,
+        'characteristic': '男女宝宝通穿的加绒卫衣，含羊绒',
+        'commission': 0.00,
+        'commissionType': 0,
+        'dateAdd': '2017-09-19 05:48:58',
+        'dateStart': '2017-09-19 05:38:39',
+        'dateUpdate': '2018-08-28 16:17:23',
+        'gotScore': 0,
+        'gotScoreType': 0,
+        'id': 4189,
+        'logisticsId': 386,
+        'minPrice': 139.00,
+        'minScore': 0,
+        'name': '羊绒卫衣',
+        'numberFav': 0,
+        'numberGoodReputation': 0,
+        'numberOrders': 0,
+        'numberSells': 0,
+        'originalPrice': 159.00,
+        'paixu': 0,
+        'pic': 'https://cdn.it120.cc/apifactory/2017/09/18/3d785c3879a0c3aa2b8b864f691c3730.jpg',
+        'pingtuan': false,
+        'pingtuanPrice': 0.00,
+        'propertyIds': ',870,871,',
+        'recommendStatus': 0,
+        'recommendStatusStr': '普通',
+        'shopId': 0,
+        'status': 0,
+        'statusStr': '上架',
+        'stores': 30,
+        'userId': 951,
+        'views': 959,
+        'weight': 0.00
+      }
+    }
+
+    // 商品相关数据设置
+    this.goodsDetail = goodsDetail
+    this.selectSizePrice = goodsDetail.basicInfo.minPrice
+    this.buyNumMax = goodsDetail.basicInfo.stores
+    this.buyNumber = this.buyNumMax > 0 ? 1 : 0
+    // 获取购物车商品数量
+    this.shopNum = 1
+    this.$apply()
+  }
+
+  async onShow() {
+    // 购物车数据
+    let cartItems = wepy.getStorageSync('cartItems')
+    if (cartItems) {
+      this.cartItems = cartItems
+    }
+  }
+
+  // 获取商品详情
+  async getGood(id) {
+    let goodResponse = await api.request({
+      url: 'products/' + id
+    })
+
+    if (goodResponse.statusCode === 400) {
+      wepy.showToast({
+        title: '链接有误或者商品已下架',
+        icon: 'none',
+        duration: 2000
+      })
+
+      setTimeout(() => {
+        wepy.navigateBack()
+      }, 2000)
+    }
+
+    if (goodResponse.statusCode === 200) {
+      this.good = goodResponse.data
+      this.$apply()
+    }
+
+    return goodResponse
+  }
+}
+</script>

@@ -1,0 +1,580 @@
+<style lang="less">
+  page{
+    /*height: 100%;*/
+  }
+  .container{
+    justify-content:initial;
+  }
+  .title-box{
+    width: 100%;
+    padding-top: 330rpx;
+    text-align: center;
+    font-size:28rpx;
+    color:#999;
+    background: url(https://cdn.it120.cc/images/weappshop/icon-cart.png) no-repeat center 205rpx;
+    background-size: 100rpx auto;
+    margin-bottom: 50rpx;
+  }
+  .to-index-btn{
+    color:#fff;
+    background:#e64340;
+    border-radius:6px;
+    width:300rpx;
+    height:70rpx;
+    line-height: 70rpx;
+    text-align: center;
+    font-size:28rpx;
+  }
+  .list-top{
+    width: 100%;
+    height: 88rpx;
+    line-height: 88rpx;
+    box-sizing: border-box;
+    display: flex;
+    justify-content:space-between;
+    padding: 0 30rpx;
+    font-size: 28rpx;
+    align-items: center;
+  }
+  .list-top .label{
+    color: #000;
+  }
+  .list-top .edit-btn{
+    color: #999;
+    height: 100%;
+  }
+  .goodsList{
+    width: 100%;
+    background-color: #fff;
+    padding-bottom: 100rpx;
+  }
+  .a-gooods{
+    width: 100%;
+    overflow: hidden;
+  }
+  .a-goods-conts{
+    display: flex;
+    justify-content:space-between;
+    padding-left: 30rpx;
+    width: 870rpx;
+    box-sizing: border-box;
+    transition: margin-left 0.2s ease-in-out;
+    background: url(https://cdn.it120.cc/images/weappshop/gou.png) no-repeat 30rpx center;
+    background-size: 40rpx auto;
+  }
+  .a-goods-conts.active{
+    background: url(https://cdn.it120.cc/images/weappshop/gou-red.png) no-repeat 30rpx center;
+    background-size: 40rpx auto;
+  }
+  .goods-info{
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content:space-between;
+    padding: 30rpx 0 30rpx 0rpx;
+    width: 720rpx;
+    box-sizing: border-box;
+  }
+  .goods-info .select-box {
+    width:60rpx;
+    height:160rpx;
+  }
+  .goods-info .img-box{
+    width: 160rpx;
+    height:160rpx;
+    overflow: hidden;
+    margin-right: 20rpx;
+    background-color: #d8d8d8;
+  }
+  .goods-info .text-box{
+    width: 440rpx;
+    position: relative;
+  }
+  .goods-info .text-box .goods-title{
+    font-size: 28rpx;
+    color:#000;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 10rpx 20rpx 5rpx 0;
+  }
+  .goods-info .text-box .goods-label{
+    font-size: 26rpx;
+    color:#999;
+    height: 38rpx;
+    line-height: 38rpx;
+    margin: 8rpx 0 25rpx 0;
+  }
+  .goods-info .text-box .goods-price{
+    font-size: 26rpx;
+    color:#e64340;
+  }
+  .goods-info .text-box .buy-num{
+    width: 164rpx;
+    height: 48rpx;
+    line-height: 48rpx;
+    position: absolute;
+    right: 30rpx;
+    bottom: 0;
+    display: flex;
+    /*justify-content: space-between;*/
+    font-size: 24rpx;
+    text-align: center
+  }
+  .goods-info .text-box .buy-num .jian-btn{
+    width: 48rpx;
+    height: 100%;
+    border-left: 1rpx solid #ccc;
+    border-bottom: 1rpx solid #ccc;
+    border-top: 1rpx solid #ccc;
+    border-bottom-left-radius: 6rpx;
+    border-top-left-radius: 6rpx;
+  }
+  .goods-info .text-box .buy-num .jian-btn.disabled{
+    background-color: #f5f5f9;
+    border-left: 1rpx solid #eee;
+    border-bottom: 1rpx solid #eee;
+    border-top: 1rpx solid #eee;
+    color: #ccc;
+  }
+  .goods-info .text-box .buy-num .jia-btn{
+    width: 48rpx;
+    height: 100%;
+    border-right: 1rpx solid #ccc;
+    border-bottom: 1rpx solid #ccc;
+    border-top: 1rpx solid #ccc;
+    border-bottom-right-radius: 6rpx;
+    border-top-right-radius: 6rpx;
+  }
+  .goods-info .text-box .buy-num .jia-btn.disabled{
+    background-color: #f5f5f9;
+    border-right: 1rpx solid #eee;
+    border-bottom: 1rpx solid #eee;
+    border-top: 1rpx solid #eee;
+    color: #ccc;
+  }
+  .goods-info .text-box .buy-num input{
+    width: 68rpx;
+    height: 48rpx;
+    min-height: 48rpx;
+    text-align: center;
+    font-size: 24rpx;
+    border: 1rpx solid #ccc;
+  }
+
+  .goods-info .img-box .img{
+    width: 160rpx;
+    height:160rpx;
+  }
+
+  .a-goods-conts .delete-btn{
+    width: 120rpx;
+    line-height: 220rpx;
+    text-align: center;
+    background:#e64340;
+    font-size: 24rpx;
+    color: #fff;
+  }
+  .jiesuan-box{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100rpx;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-bottom:1px solid #eee;
+    border-top:1px solid #eee;
+    background-color: #fff;
+    z-index: 999;
+  }
+  .jiesuan-box .to-pay-btn{
+    width:240rpx;
+    text-align: center;
+    line-height: 100rpx;
+    background-color: #e64340;
+    font-size:32rpx;
+    color:#ffffff;
+  }
+  .jiesuan-box .to-pay-btn.no-select{
+    background-color: #ccc;
+  }
+
+  .jiesuan-box  .left-price{
+    display: flex;
+    width: 510rpx;
+    justify-content: space-between;
+    line-height: 100rpx;
+    padding: 0 30rpx 0 0;
+    font-size:28rpx;
+    box-sizing: border-box;
+  }
+  .jiesuan-box .all-selected{
+    padding-left: 90rpx;
+    color:#000000;
+    background: url(https://cdn.it120.cc/images/weappshop/gou.png) no-repeat 30rpx center;
+    background-size: 40rpx auto;
+  }
+  .jiesuan-box .all-selected.active{
+    background: url(https://cdn.it120.cc/images/weappshop/gou-red.png) no-repeat 30rpx center;
+    background-size: 40rpx auto;
+  }
+  .jiesuan-box .total{
+    color: #e64340;
+  }
+  page{
+    min-height: 100%;
+    background-color: #F2f2f2;
+  }
+  .container {
+    background-color: #F2f2f2;
+    min-height: 100%;
+  }
+  .pos-fiexd{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+</style>
+<template>
+  <view class="container">
+    <block wx:if="{{ noGood }}" >
+      <view class="title-box">
+        购物车空空如也～
+      </view>
+      <navigator class="to-index-btn" open-type="switchTab" url="/pages/index/index">
+        去逛逛
+      </navigator>
+    </block>
+    <block wx:else>
+        <view class="list-top">
+            <view class="label">微商城</view>
+            <!-- <view class="edit-btn" hidden="{{ !saveHidden }}" @tap="editTap()">编辑</view>
+            <view class="edit-btn" hidden="{{ saveHidden }}" @tap="saveTap()">完成</view> -->
+        </view>
+        <view class="goodsList">
+          <view class="a-gooods" wx:for="{{ list }}"  wx:key="{{ index }}" >
+            <view class="a-goods-conts {{ item.active ? 'active' : '' }}" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{ index }}" style="{{ item.left }}">
+              <view class="goods-info" catchtap="toGoodDetail" data-id="{{ item.product.id }}">
+                <view class="select-box" data-index="{{ index }}" catchtap="selectTap"></view>
+                <view class="img-box">
+                    <image src="{{ item.product.image_url }}" class="img"/>
+                </view>
+                <view class="text-box">
+                    <view class="goods-title">{{ item.product.title }}</view>
+                    <view class="goods-label">{{ item.product.label}}</view>
+                    <view class="goods-price">¥ {{ item.product.price }}</view>
+                    <view class="buy-num">
+                      <view class="jian-btn {{ item.number === 1 ? 'disabled' : '' }}" catchtap="jianBtnTap" data-index="{{ index }}">-</view>
+                      <input  type="number" value="{{ item.number }}" disabled/>
+                      <view class="jia-btn {{ item.number === curTouchGoodStore ? 'disabled' : '' }}" catchtap="jiaBtnTap" data-index="{{ index }}">+</view>
+                    </view>
+                </view>
+              </view>
+              <view class="delete-btn" data-index="{{ index }}" catchtap="delItem">
+                删除
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="jiesuan-box">
+          <view class="left-price">
+              <view class="all-selected  {{ allSelect ? 'active' : '' }}" @tap="bindAllSelect()">全选</view>
+              <view class="total" hidden="{{ noSelect }}">合计：¥ {{ totalPrice }}</view>
+          </view>
+          <view class="to-pay-btn {{ noSelect ? 'no-select' : '' }}" hidden="{{ !saveHidden }}" @tap="toPayOrder()">去结算</view>
+          <view class="to-pay-btn {{ noSelect ? 'no-select' : '' }}" hidden="{{ saveHidden }}" @tap="deleteSelected()">删除</view>
+        </view>
+    </block>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import api from '@/utils/api'
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '购物车',
+    navigationBarBackgroundColor: '#fafafa'
+  }
+
+  data = {
+    saveHidden: true,
+    list: [],
+    delBtnWidth: 120,    // 删除按钮宽度单位（rpx）
+    startX: 0
+  }
+
+  computed = {
+    // 是否有商品
+    noGood() {
+      return this.list.length === 0
+    },
+    // 商品总价计算
+    totalPrice() {
+      let totalPrice = 0
+      for (let i = 0; i < this.list.length; i++) {
+        if (this.list[i].active) {
+          totalPrice += this.list[i].number * this.list[i].product.price
+        }
+      }
+
+      return totalPrice
+    },
+    // 是否全选
+    allSelect() {
+      let allSelect = true
+      for (let i = 0; i < this.list.length; i++) {
+        if (!this.list[i].active) {
+          allSelect = false
+          break
+        }
+      }
+
+      return allSelect
+    },
+    // 是否一个都没选
+    noSelect() {
+      let noSelect = true
+      for (let i = 0; i < this.list.length; i++) {
+        if (this.list[i].active) {
+          noSelect = false
+          break
+        }
+      }
+
+      return noSelect
+    }
+  }
+
+  methods = {
+    // 编辑
+    editTap() {
+      for (let i = 0; i < this.list.length; i++) {
+        this.list[i].active = false
+      }
+
+      this.saveHidden = false
+    },
+    // 完成
+    saveTap() {
+      for (let i = 0; i < this.list.length; i++) {
+        this.list[i].active = true
+      }
+
+      this.saveHidden = true
+    },
+    // 选择商品
+    selectTap(e) {
+      let index = e.currentTarget.dataset.index
+
+      if (index !== '' && index !== null) {
+        this.list[parseInt(index)].active = !this.list[parseInt(index)].active
+      }
+    },
+    // 跳转到商品页
+    toGoodDetail(e) {
+      let id = e.currentTarget.dataset.id
+
+      if (id !== '' && id !== null) {
+        wepy.navigateTo({
+          url: '/pages/goods/show?id=' + id
+        })
+      }
+    },
+    // 删除商品(通过编辑删除)
+    deleteSelected() {
+      // 删除选中的商品
+      this.list = this.list.filter((good) => {
+        return !good.active
+      })
+    },
+    // 全选
+    bindAllSelect() {
+      if (this.allSelect) {
+        for (let i = 0; i < this.list.length; i++) {
+          this.list[i].active = false
+        }
+      } else {
+        for (let i = 0; i < this.list.length; i++) {
+          this.list[i].active = true
+        }
+      }
+    },
+    // 数量 - 减
+    jianBtnTap(e) {
+      let index = e.currentTarget.dataset.index
+
+      if (index !== '' && index !== null) {
+        if (this.list[parseInt(index)].number > 1) {
+          this.list[parseInt(index)].number --
+
+          // 更新 API ？
+          // 更新缓存 ？
+        } else {
+          wepy.showToast({
+            title: '受不了了，该宝贝不能再减少了哦',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      }
+    },
+    // 数量 - 加
+    jiaBtnTap(e) {
+      let index = e.currentTarget.dataset.index
+
+      if (index !== '' && index !== null) {
+        if (this.list[parseInt(index)].number < this.list[parseInt(index)].product.stock) {
+          this.list[parseInt(index)].number ++
+
+          // 更新 API ？
+          // 更新缓存 ？
+        } else {
+          wepy.showToast({
+            title: '亲，该宝贝不能再购买更多了哦',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      }
+    },
+    // 开始滑动
+    touchS(e) {
+      if (e.touches.length === 1) {
+        this.startX = e.touches[0].clientX
+      }
+    },
+    // 滑动
+    touchM(e) {
+      let index = e.currentTarget.dataset.index
+
+      if (e.touches.length === 1) {
+        let moveX = e.touches[0].clientX
+        let disX = this.startX - moveX
+        let delBtnWidth = this.delBtnWidth
+        let left = ''
+
+        if (disX === 0 || disX < 0) { // 如果移动距离小于等于0，container位置不变
+          left = 'margin-left: 0px'
+        } else if (disX > 0) { // 移动距离大于0，container left值等于手指移动距离
+          left = 'margin-left: -' + disX + 'px'
+          if (disX >= delBtnWidth) {
+            left = 'left:-' + delBtnWidth + 'px'
+          }
+        }
+
+        if (index !== '' && index !== null) {
+          this.list[parseInt(index)].left = left
+        }
+      }
+    },
+    // 滑动结束
+    touchE(e) {
+      let index = e.currentTarget.dataset.index
+
+      if (e.changedTouches.length === 1) {
+        let endX = e.changedTouches[0].clientX
+        let disX = this.startX - endX
+        let delBtnWidth = this.delBtnWidth
+
+        // 如果距离小于删除按钮的1/2，不显示删除按钮
+        let left = disX > delBtnWidth / 2 ? 'margin-left:-' + delBtnWidth + 'px' : 'margin-left: 0px'
+
+        if (index !== '' && index !== null) {
+          this.list[parseInt(index)].left = left
+        }
+      }
+    },
+    // 删除商品(单个)
+    delItem(e) {
+      let index = e.currentTarget.dataset.index
+
+      // 删除的商品 ID
+      let id = this.list[index].product.id
+      if (!id) {
+        wepy.showModal({
+          title: '提示',
+          content: '出错了，请重试'
+        })
+
+        return
+      }
+
+      // 提交数据
+      api.authRequest({
+        url: 'cart/' + id,
+        method: 'DELETE'
+      })
+
+      // 删除商品
+      this.list.splice(index, 1)
+
+      // 更新缓存
+      wepy.setStorageSync('cartItems', this.list)
+    },
+    // 结算
+    toPayOrder: function() {
+      if (this.noSelect) {
+        return
+      }
+
+      wepy.showLoading()
+
+      // 选中商品
+      let buyList = this.list.filter((good) => {
+        return good.active
+      })
+
+      // 重新计算价格，判断库存 ??（还是到结算页面下单再计算？？） todo
+
+      // 设置缓存
+      wepy.setStorageSync('buyGoodInfo', buyList)
+
+      wepy.hideLoading()
+
+      wepy.navigateTo({
+        url: '/pages/to-pay-order/index'
+      })
+    }
+  }
+
+  onLoad() {
+    this.initEleWidth()
+    // 从数据库中获取购物车数据
+  }
+
+  async onShow() {
+    // 从缓存中获取购物车数据
+    let cartItems = wepy.getStorageSync('cartItems')
+    if (cartItems) {
+      // 设置商品属性
+      cartItems.forEach((item) => {
+        item.active = true // 表示是否选择商品
+        item.left = 'margin-left: 0px' // 用于控制商品向左滑动时显示删除标签
+      })
+
+      this.list = cartItems
+    }
+
+    this.saveHidden = true
+  }
+
+  initEleWidth() {
+    this.delBtnWidth = this.getEleWidth(this.delBtnWidth)
+  }
+
+  getEleWidth(w) {
+    let real = 0
+    try {
+      let res = wepy.getSystemInfoSync().windowWidth
+      let scale = (750 / 2) / (w / 2)  // 以宽度750px设计稿做宽度的自适应
+      real = Math.floor(res / scale)
+      return real
+    } catch (e) {
+      console.log(e)
+      return false
+    }
+  }
+}
+</script>

@@ -1,0 +1,203 @@
+<style lang="less">
+  .container {
+    background-color: #F2f2f2;
+    min-height: 100%;
+  }
+  .goods-container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
+    box-sizing: content-box;
+    padding: 24rpx;
+  }
+  .goods-box{
+    width: 339rpx;
+    height: 472rpx;
+    background-color: #fff;
+    overflow: hidden;
+    margin-bottom: 24rpx;
+  }
+  .goods-box .img-box{
+    width: 339rpx;
+    height: 339rpx;
+    overflow: hidden;
+  }
+  .goods-box .img-box image{
+     width: 339rpx;
+     height: 339rpx;
+  }
+  .goods-box .goods-title{
+    width: 280rpx;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 24rpx;
+    padding: 24rpx 0 0rpx 0;
+    color:#000;
+    margin-left: 24rpx;
+  }
+  .goods-box .goods-price{
+    width: 280rpx;
+    overflow: hidden;
+    font-size: 24rpx;
+    padding: 24rpx 0;
+    color:#e64340;
+    margin-left: 24rpx;
+  }
+  .no-more-goods{
+    text-align: center;
+    font-size: 24rpx;
+    padding-bottom:48rpx;
+    color: #999;
+  }
+  .type-container{
+    width: 100%;
+    height: 88rpx;
+    background-color: #fff;
+    overflow: hidden;
+  }
+</style>
+<template>
+  <view class="container">
+    <!-- 商品列表 -->
+    <view class="goods-container">
+      <view class="goods-box" wx:for-items="{{ goods }}" wx:key="{{ index }}" data-id="{{ item.id }}" bindtap="toGoodDetail">
+        <view class="img-box">
+          <image src="{{ item.image_url }}" class="image" mode="aspectFill" lazy-load="true"/>
+        </view>
+        <view class="goods-title">{{ item.title }}</view>
+        <view style='display:flex;'>
+          <view class="goods-price">¥ {{ item.price }}</view>
+          <view wx:if="{{ item.originalPrice && item.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice }}</view>
+        </view>
+      </view>
+    </view>
+    <view hidden="{{ !noMoreData }}" class="no-more-goods">没有更多啦</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import api from '@/utils/api'
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '商品列表',
+    navigationBarBackgroundColor: '#fafafa',
+    enablePullDownRefresh: true
+  }
+
+  data = {
+    // 商品
+    goods: [],
+    // 是否有更多数据 true:没有
+    noMoreData: false,
+    // 是否在加载中
+    isLoading: false,
+    // 当前分页
+    page: 1
+  }
+
+  computed = {
+
+  }
+
+  methods = {
+    toGoodDetail(e) {
+      let id = e.currentTarget.dataset.id
+      wepy.navigateTo({
+        url: '/pages/goods/show?id=' + id
+      })
+    }
+  }
+
+  async onLoad() {
+    // 获取文章
+    await this.reload()
+  }
+
+  // 重新加载（下拉刷新）
+  async reload() {
+    // 如果正在加载，直接返回
+    if (this.isLoading) {
+      return
+    }
+
+    // 请求开始前重置数据
+    this.noMoreData = false
+    this.page = 1
+    this.isLoading = true
+
+    // 获取文章列表
+    await this.getGoods(true)
+
+    // 请求结束
+    this.isLoading = false
+    this.$apply()
+  }
+
+  // 加载更多 (上拉加载)
+  async loadMore() {
+    // 如果没有更多数据，或者正在加载，直接返回
+    if (this.noMoreData || this.isLoading) {
+      return
+    }
+
+    // 请求前设置数据
+    this.isLoading = true
+    this.page = this.page + 1
+
+    // 获取文章列表
+    await this.getGoods()
+
+    // 请求结束
+    this.isLoading = false
+    this.$apply()
+  }
+
+  // 获取商品列表数据
+  async getGoods(reset = false) {
+    if (!this.page) {
+      this.page = 1
+    }
+
+    // 请求接口，传入参数
+    let goodResponse = await api.request({
+      url: 'products',
+      data: {
+        page: this.page
+      }
+    })
+
+    if (goodResponse.statusCode === 200) {
+      let goods = goodResponse.data.data
+
+      // 如果传入参数 reset 为true，则覆盖 goods, 否则将数据合并到 this.goods 中
+      this.goods = reset ? goods : this.goods.concat(goods)
+
+      let pagination = goodResponse.data.meta.pagination
+      // 根据分页设置是否还有更多数据
+      if (pagination.current_page === pagination.total_pages) {
+        this.noMoreData = true
+      }
+
+      this.$apply()
+    }
+
+    return goodResponse
+  }
+
+  // 监听该页面用户下拉刷新事件
+  async onPullDownRefresh() {
+    // 需要等待数据加载结束之后，停止刷新，所以这里需要 await
+    await this.reload()
+
+    wepy.stopPullDownRefresh()
+  }
+
+  // 监听页面上拉触底事件的处理函数
+  onReachBottom() {
+    this.loadMore()
+  }
+}
+</script>

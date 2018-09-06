@@ -1,0 +1,40 @@
+<style lang="less">
+
+</style>
+<template>
+  <view class="page">
+    <view class="page__hd">
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: 'xkeyi-shop',
+    navigationBarBackgroundColor: '#fafafa'
+  }
+
+  data = {
+
+  }
+
+  computed = {
+
+  }
+
+  methods = {
+
+  }
+
+  onLoad() {
+
+  }
+
+  onShow() {
+
+  }
+}
+</script>
