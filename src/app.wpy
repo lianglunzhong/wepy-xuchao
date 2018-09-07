@@ -25,6 +25,9 @@ export default class extends wepy.app {
       'pages/goods/index',
       'pages/goods/show',
       'pages/shop-cart/index',
+      'pages/pay-order/index',
+      'pages/address/index',
+      'pages/address/create',
       'pages/my/index'
     ],
     window: {

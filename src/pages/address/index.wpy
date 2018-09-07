@@ -1,0 +1,208 @@
+<style lang="less">
+  .container {
+    background-color:#F2f2f2;
+  }
+  .address-list{
+    width: 100%;
+    background-color: #fff;
+    margin-top: 20rpx;
+    padding-bottom: 100rpx;
+  }
+  .address-list .a-address{
+    width: 720rpx;
+    margin-left: 30rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30rpx 0;
+    border-bottom: 1rpx solid #eee;
+  }
+  .a-address .left-text{
+    width: 610rpx;
+    box-sizing: border-box;
+    padding-left: 58rpx;
+  }
+  .a-address .left-text.active{
+    background: url(https://cdn.it120.cc/images/weappshop/addr-active.png) no-repeat left center;
+    background-size: 28rpx auto;
+  }
+  .a-address .left-text .name-tel{
+    margin-bottom: 20rpx;
+  }
+  .a-address .left-text .address-box{
+    font-size:28rpx;
+    line-height:36rpx;
+  }
+  .a-address .right-edit{
+    width: 109rpx;
+    height: 100%;
+    padding: 50rpx 0 50rpx 58rpx;
+    box-sizing: border-box;
+    background: url(https://cdn.it120.cc/images/weappshop/addr-edit.png) no-repeat 43rpx center;
+    background-size: 35rpx auto;
+  }
+  .bottom-box{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    font-size:28rpx;
+    color:#000000;
+    border-top: 1rpx solid #eee;
+    height:100rpx;
+    line-height: 100rpx;
+    background: #fff url(https://cdn.it120.cc/images/weappshop/arrow-right.png) no-repeat 705rpx center;
+    background-size: 15rpx auto;
+  }
+  .bottom-box .add-btn{
+    margin-left: 30rpx;
+    padding-left: 70rpx;
+    background: url(https://cdn.it120.cc/images/weappshop/add-addr.png) no-repeat left center;
+    background-size: 40rpx auto;
+  }
+  .not-address_info {
+    margin-top: 20px;
+    text-align: center;
+    color: #eee;
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="address-list">
+      <block wx:if="{{ hasAddress }}">
+        <view class="a-address"  wx:for-items="{{ addressList }}" wx:key="{{ index }}">
+          <view class="left-text {{ index === 0 ? 'active' : '' }}" bindtap="selectAddress" data-id="{{ item.id }}" data-index="{{ index }}">
+             <view class="name-tel">
+                {{ item.contact_name }}  {{ item.contact_phone }}
+             </view>
+             <view class="address-box">
+                {{ item.full_address }}
+             </view>
+          </view>
+          <view class="right-edit" catchtap="deleteAddess" data-id="{{ item.id }}" data-index="{{ index }}"></view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="not-address_info">您还没有任何收货地址！</view>
+      </block>
+    </view>
+    <view class="bottom-box">
+      <view class="add-btn" bindtap="addAddress">新增收货地址</view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import api from '@/utils/api'
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '选择收货地址',
+    navigationBarBackgroundColor: '#fafafa'
+  }
+
+  data = {
+    addressList: []
+  }
+
+  computed = {
+    hasAddress() {
+      return this.addressList.length || 0
+    }
+  }
+
+  methods = {
+    // 新增地址
+    addAddress() {
+      wepy.navigateTo({
+        url: '/pages/address/create'
+      })
+    },
+    // 删除地址
+    async deleteAddess(e) {
+      let index = e.currentTarget.dataset.index
+
+      let id = e.currentTarget.dataset.id
+      if (!id) {
+        wepy.showModal({
+          title: '提示',
+          content: '出错了，请重试'
+        })
+
+        return
+      }
+
+      // 确认是否删除
+      let res = await wepy.showModal({
+        title: '确认删除',
+        content: '您确认删除该地址吗',
+        confirmText: '删除',
+        cancelText: '取消'
+      })
+
+      // 点击取消后返回
+      if (!res.confirm) {
+        return
+      }
+
+      api.authRequest({
+        url: 'addresses/' + id,
+        method: 'DELETE'
+      }, false)
+
+      // 删除商品
+      this.addressList.splice(index, 1)
+      this.$apply()
+      // 更新缓存
+      wepy.setStorageSync('addressInfo', this.addressList)
+    },
+    // 选择地址
+    selectAddress(e) {
+      let index = e.currentTarget.dataset.index
+      let id = e.currentTarget.dataset.id
+
+      // 更新地址排序
+      let addresses = []
+      addresses.push(this.addressList[index])
+
+      this.addressList.forEach((address) => {
+        if (address.id !== id) {
+          addresses.push(address)
+        }
+      })
+
+      // 更新缓存
+      wepy.setStorageSync('addressInfo', addresses)
+      wepy.navigateBack()
+    }
+  }
+
+  onLoad() {
+
+  }
+
+  async onShow() {
+    let addresses = wepy.getStorageSync('addressInfo')
+
+    if (!addresses || addresses.length === 0) {
+      let addressResponse = await api.authRequest({
+        url: 'addresses',
+        method: 'GET'
+      })
+
+      if (addressResponse.statusCode === 200) {
+        if (addressResponse.data.data.length > 0) {
+          addresses = addressResponse.data.data
+          wepy.setStorageSync('addressInfo', addresses)
+        }
+      }
+    }
+
+    if (addresses && addresses.length > 0) {
+      this.addressList = addresses
+    }
+
+    this.$apply()
+  }
+}
+</script>

@@ -526,15 +526,13 @@ export default class Index extends wepy.page {
         return good.active
       })
 
-      // 重新计算价格，判断库存 ??（还是到结算页面下单再计算？？） todo
-
       // 设置缓存
-      wepy.setStorageSync('buyGoodInfo', buyList)
+      wepy.setStorageSync('cartBuyInfo', buyList)
 
       wepy.hideLoading()
 
       wepy.navigateTo({
-        url: '/pages/to-pay-order/index'
+        url: '/pages/pay-order/index?type=cart_buy'
       })
     }
   }

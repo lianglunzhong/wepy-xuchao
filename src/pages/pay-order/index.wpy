@@ -1,0 +1,390 @@
+<style lang="less">
+  .container{
+    background-color:#F2f2f2;
+    padding-bottom: 100rpx;
+  }
+  .address-box{
+    width: 100%;
+    background: url(https://cdn.it120.cc/images/weappshop/arrow-right.png) no-repeat 705rpx center ,
+                url(https://cdn.it120.cc/images/weappshop/addr-line.png) no-repeat center bottom;
+    background-size: 16rpx auto,750rpx auto;
+    background-color: #fff;
+    margin: 20rpx 0;
+  }
+  .add-addres{
+    width: 100%;
+  }
+  .add-address .title{
+    font-size: 28rpx;
+    color: #000;
+    margin-left: 30rpx;
+    background: url(https://cdn.it120.cc/images/weappshop/ico-add-addr.png) no-repeat left center;
+    background-size: 60rpx auto;
+    padding: 40rpx 0 40rpx 90rpx;
+  }
+  .show-address{
+    width: 664rpx;
+    box-sizing: border-box;
+    padding-left: 100rpx;
+    background: url(https://cdn.it120.cc/images/weappshop/ico-addr.png) no-repeat 30rpx 35rpx;
+    background-size: 30rpx auto;
+  }
+  .show-address .name-tel{
+    font-size: 28rpx;
+    color: #000;
+    padding: 30rpx 0 20rpx 0;
+  }
+  .show-address .addr-text{
+    font-size: 24rpx;
+    color: #888;
+    padding-bottom: 34rpx;
+    line-height: 36rpx;
+  }
+  form{
+    width: 100%;
+  }
+  .goods-list{
+    width:100%;
+    background-color: #fff;
+    margin-bottom: 20rpx;
+  }
+  .goods-list .list-title{
+    font-size: 28rpx;
+    color: #000;
+    padding: 30rpx 0 25rpx 30rpx;
+  }
+  .goods-list  .a-goods{
+    width: 720rpx;
+    margin-left: 30rpx;
+    display: flex;
+    /*justify-content: space-between;*/
+    border-top: 1px solid #eee;
+    padding: 30rpx 30rpx 30rpx 0;
+  }
+  .goods-list  .a-goods .img-box{
+    width: 160rpx;
+    height:160rpx;
+    overflow: hidden;
+    margin-right: 20rpx;
+    background-color: #d8d8d8;
+  }
+
+  .goods-list .img-box .img{
+    width: 160rpx;
+    height:160rpx;
+  }
+  .goods-list  .a-goods .text-box{
+    width: 510rpx;
+    box-sizing: border-box;
+    padding-top: 10rpx;
+  }
+  .a-goods .text-box .arow{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .a-goods .text-box .arow .goods-name{
+     width: 360rpx;
+     font-size:26rpx;
+     height: 74rpx;
+     color:#000000;
+     line-height: 1.6;
+     overflow: hidden;
+  }
+  .a-goods .text-box .arow01{
+    margin-bottom: 30rpx;
+  }
+  .a-goods .text-box .arow .goods-price{
+    font-size:26rpx;
+    color:#000000;
+    align-self: flex-start;
+  }
+  .a-goods .text-box .arow .goods-label{
+    font-size: 26rpx;
+    color: #999;
+  }
+  .a-goods .text-box .arow .goods-num{
+    font-size: 26rpx;
+    color: #999;
+  }
+  .peisong-way{
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 20rpx;
+  }
+  .peisong-way .row-box{
+    width: 720rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 24rpx 0 24rpx 30rpx;
+    border-bottom: 1rpx solid #eee;
+  }
+  .peisong-way .row-label{
+    font-size: 28rpx;
+    color: #000;
+  }
+  .peisong-way .right-text{
+    font-size: 28rpx;
+    color: #666;
+    padding-right: 30rpx;
+  }
+  .peisong-way .liuyan{
+    width: 510rpx;
+    font-size: 28rpx;
+  }
+  .goods-info{
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 120rpx;
+    padding-bottom: 24rpx;
+  }
+  .goods-info .row-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 24rpx 30rpx 12rpx 30rpx;
+    font-size: 28rpx;
+    color: #000;
+  }
+  .goods-info .row-box .right-text{
+    text-align: right;
+  }
+  .jiesuan-box{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100rpx;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-top:1px solid #eee;
+    background-color: #fff;
+    z-index: 999;
+  }
+  .jiesuan-box .to-pay-btn{
+    width:250rpx;
+    text-align: center;
+    height: 100%;
+    line-height: 100rpx;
+    background-color: #e64340;
+    font-size:32rpx;
+    color:#ffffff;
+    border-radius: 0;
+  }
+
+  .jiesuan-box  .left-price{
+    display: flex;
+    width: 500rpx;
+    justify-content:flex-end;
+    line-height: 100rpx;
+    padding: 0 30rpx 0 0;
+    font-size:28rpx;
+    box-sizing: border-box;
+  }
+
+  .jiesuan-box .total{
+    color: #e64340;
+    text-align: right;
+  }
+</style>
+
+<template>
+  <view class="container">
+    <form bindsubmit="createOrder" report-submit="true">
+      <view class="address-box">
+        <view class="add-address" hidden="{{ hasAddress }}">
+            <view class="title" bindtap="addAddress">新增收货地址</view>
+        </view>
+        <view class="show-address" hidden="{{ !hasAddress }}" bindtap="selectAddress">
+            <view class="name-tel">{{ address.contact_name }}  {{ address.contact_phone }}</view>
+            <view class="addr-text">{{ address.full_address }}</view>
+        </view>
+      </view>
+
+     <view class="goods-list">
+        <view class="list-title">商品列表</view>
+        <view class="a-goods" wx:for-items="{{ list }}" wx:key="{{ index }}">
+          <view class="img-box">
+            <image src="{{ item.product.image_url }}" class="img" />
+          </view>
+          <view class="text-box">
+            <view class="arow arow01">
+              <view class="goods-name">{{ item.product.title }}</view>
+              <view class="goods-price">¥ {{ item.product.price }}</view>
+            </view>
+            <view class="arow">
+              <view class="goods-label">{{ item.product.label }}</view>
+              <view class="goods-num">x {{ item.number }}</view>
+            </view>
+          </view>
+        </view>
+     </view>
+     <view class="peisong-way">
+        <view class="row-box">
+          <view class="row-label">备注</view>
+          <view class="right-text">
+            <input name="remark" type="text" class="liuyan" placeholder="如需备注请输入" />
+            </view>
+        </view>
+     </view>
+
+     <view class="jiesuan-box">
+        <view class="left-price">
+            <view class="total">合计：¥ {{ totalPrice }}</view>
+        </view>
+        <button class="to-pay-btn" formType="submit">提交订单</button>
+    </view>
+    </form>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import api from '@/utils/api'
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '确认订单',
+    navigationBarBackgroundColor: '#fafafa'
+  }
+
+  data = {
+    list: [],
+    address: {} // 最新使用的地址
+  }
+
+  computed = {
+    // 是否有地址
+    hasAddress() {
+      let hasAddress = true
+
+      if (JSON.stringify(this.address) === '{}') {
+        hasAddress = false
+      }
+
+      return hasAddress
+    },
+    // 商品总价计算
+    totalPrice() {
+      let totalPrice = 0
+      for (let i = 0; i < this.list.length; i++) {
+        totalPrice += this.list[i].number * this.list[i].product.price
+      }
+
+      return totalPrice
+    }
+  }
+
+  methods = {
+    // 新增地址
+    addAddress() {
+      wepy.navigateTo({
+        url: '/pages/address/create'
+      })
+    },
+    // 选择地址
+    selectAddress() {
+      wepy.navigateTo({
+        url: '/pages/address/index'
+      })
+    }
+  }
+
+  async onLoad(options) {
+    let type = options.type
+    let list = []
+    // 直接购买
+    if (type === 'buy_now') {
+      list = wepy.getStorageSync('buyNowInfo')
+    } else {
+      list = wepy.getStorageSync('cartBuyInfo')
+    }
+
+    if (!list || list.length === 0) {
+      wepy.showToast({
+        title: '亲，您还没选择商品哦',
+        icon: 'none',
+        duration: 2000
+      })
+
+      setTimeout(() => {
+        wepy.navigateBack()
+      }, 2000)
+
+      return
+    }
+
+    this.list = list
+    console.log(this.list)
+    this.$apply()
+  }
+
+  async onShow() {
+    let addresses = wepy.getStorageSync('addressInfo')
+
+    if (!addresses || addresses.length === 0) {
+      let addressResponse = await api.authRequest({
+        url: 'addresses',
+        method: 'GET'
+      })
+
+      if (addressResponse.statusCode === 200) {
+        if (addressResponse.data.data.length > 0) {
+          addresses = addressResponse.data.data
+          wepy.setStorageSync('addressInfo', addresses)
+        }
+      }
+    }
+
+    if (addresses && addresses.length > 0) {
+      this.address = addresses[0]
+    }
+
+    this.$apply()
+  }
+
+  async createOrder(e) {
+    wepy.showLoading()
+
+    if (!this.hasAddress) {
+      wepy.hideLoading()
+      wepy.showModal({
+        title: '错误',
+        content: '请先设置您的收货地址！',
+        showCancel: false
+      })
+      return
+    }
+
+    if (this.list.length === 0) {
+      wepy.hideLoading()
+      wepy.showModal({
+        title: '错误',
+        content: '商品数据出错了！',
+        showCancel: false
+      })
+      return
+    }
+
+    let postData = {}
+    postData.address_id = this.address.id
+    postData.items = []
+    postData.remark = e.detail.value.remark
+
+    this.list.forEach((list) => {
+      let good = {}
+      good.number = list.number
+      good.product_id = list.product.id
+
+      postData.items.push(good)
+    })
+
+    console.log(postData)
+    wepy.hideLoading()
+  }
+}
+</script>

@@ -446,22 +446,18 @@ export default class GoodDetailIndex extends wepy.page {
     id: null,
     // 商品详情
     good: {},
-    goodsDetail: {},
     // banner 设置相关
     autoplay: true,
     interval: 3000,
     duration: 1000,
     // 购物车商品
     cartItems: [],
-    // 商品价格
-    selectSizePrice: 0,
     hideShopPopup: true,
     shopType: 'addShopCar',
     // 购买（加入购物车）相关
-    buyNumber: 0,
+    buyNumber: 1,
     buyNumMin: 1,
-    buyNumMax: 99999,
-    canSubmit: false //  选中规格尺寸时候是否允许加入购物车
+    buyNumMax: 99999
   }
 
   computed = {
@@ -538,10 +534,10 @@ export default class GoodDetailIndex extends wepy.page {
           duration: 2000
         })
       } else {
-        wepy.showToast({
-          title: '加入购物车成功',
-          icon: 'none',
-          duration: 2000
+        wepy.showModal({
+          title: '提示',
+          content: '添加购物车失败！',
+          showCancel: false
         })
       }
     },
@@ -577,200 +573,6 @@ export default class GoodDetailIndex extends wepy.page {
     // 获取商品详情
     await this.getGood(this.id)
 
-    // 商品详情
-    let goodsDetail = {
-      'logistics': {
-        'isFree': true,
-        'feeType': 0,
-        'feeTypeStr': '按件数',
-        'details': [
-          {
-            'addAmount': 0.00,
-            'addNumber': 1,
-            'firstAmount': 8.00,
-            'firstNumber': 100,
-            'type': 0,
-            'userId': 951
-          }
-        ]
-      },
-      'extJson': {
-
-      },
-      'category': {
-        'dateAdd': '2017-09-12 11:07:32',
-        'icon': '',
-        'id': 1872,
-        'isUse': true,
-        'key': '1',
-        'name': '上装',
-        'paixu': 0,
-        'pid': 0,
-        'type': '',
-        'userId': 951
-      },
-      'pics': [
-        {
-          'goodsId': 4189,
-          'id': 24411,
-          'pic': 'https://cdn.it120.cc/apifactory/2017/09/18/3d785c3879a0c3aa2b8b864f691c3730.jpg'
-        },
-        {
-          'goodsId': 4189,
-          'id': 24412,
-          'pic': 'https://cdn.it120.cc/apifactory/2017/09/18/53c7344336b7d3ae795f6db8e6c52d0f.jpg'
-        },
-        {
-          'goodsId': 4189,
-          'id': 24413,
-          'pic': 'https://cdn.it120.cc/apifactory/2017/09/18/8e1ad86f3bd638d35b6d7b95123d11dd.jpg'
-        }
-      ],
-      'properties': [
-        {
-          'childsCurGoods': [
-            {
-              'dateAdd': '2017-09-14 09:34:13',
-              'id': 1639,
-              'name': '5',
-              'paixu': 0,
-              'propertyId': 870,
-              'remark': '',
-              'userId': 951
-            },
-            {
-              'dateAdd': '2017-09-14 09:34:17',
-              'id': 1640,
-              'name': '7',
-              'paixu': 0,
-              'propertyId': 870,
-              'remark': '',
-              'userId': 951
-            },
-            {
-              'dateAdd': '2017-09-14 09:34:21',
-              'id': 1641,
-              'name': '9',
-              'paixu': 0,
-              'propertyId': 870,
-              'remark': '',
-              'userId': 951
-            },
-            {
-              'dateAdd': '2017-09-14 09:34:25',
-              'id': 1642,
-              'name': '11',
-              'paixu': 0,
-              'propertyId': 870,
-              'remark': '',
-              'userId': 951
-            },
-            {
-              'dateAdd': '2017-09-14 09:34:32',
-              'id': 1644,
-              'name': '13',
-              'paixu': 0,
-              'propertyId': 870,
-              'remark': '',
-              'userId': 951
-            },
-            {
-              'dateAdd': '2017-09-14 09:34:45',
-              'id': 1646,
-              'name': '15',
-              'paixu': 0,
-              'propertyId': 870,
-              'remark': '',
-              'userId': 951
-            },
-            {
-              'dateAdd': '2017-09-16 14:46:12',
-              'id': 1704,
-              'name': '5',
-              'paixu': 0,
-              'propertyId': 870,
-              'remark': '',
-              'userId': 951
-            }
-          ],
-          'dateAdd': '2017-09-12 20:59:10',
-          'id': 870,
-          'name': '尺码',
-          'paixu': 0,
-          'userId': 951
-        },
-        {
-          'childsCurGoods': [
-            {
-              'dateAdd': '2017-09-13 10:10:40',
-              'id': 1605,
-              'name': '藏青色',
-              'paixu': 0,
-              'propertyId': 871,
-              'remark': '',
-              'userId': 951
-            },
-            {
-              'dateAdd': '2017-09-13 13:12:49',
-              'id': 1623,
-              'name': '兰色',
-              'paixu': 0,
-              'propertyId': 871,
-              'remark': '',
-              'userId': 951
-            }
-          ],
-          'dateAdd': '2017-09-12 21:03:40',
-          'id': 871,
-          'name': '颜色',
-          'paixu': 0,
-          'userId': 951
-        }
-      ],
-      'basicInfo': {
-        'categoryId': 1872,
-        'characteristic': '男女宝宝通穿的加绒卫衣，含羊绒',
-        'commission': 0.00,
-        'commissionType': 0,
-        'dateAdd': '2017-09-19 05:48:58',
-        'dateStart': '2017-09-19 05:38:39',
-        'dateUpdate': '2018-08-28 16:17:23',
-        'gotScore': 0,
-        'gotScoreType': 0,
-        'id': 4189,
-        'logisticsId': 386,
-        'minPrice': 139.00,
-        'minScore': 0,
-        'name': '羊绒卫衣',
-        'numberFav': 0,
-        'numberGoodReputation': 0,
-        'numberOrders': 0,
-        'numberSells': 0,
-        'originalPrice': 159.00,
-        'paixu': 0,
-        'pic': 'https://cdn.it120.cc/apifactory/2017/09/18/3d785c3879a0c3aa2b8b864f691c3730.jpg',
-        'pingtuan': false,
-        'pingtuanPrice': 0.00,
-        'propertyIds': ',870,871,',
-        'recommendStatus': 0,
-        'recommendStatusStr': '普通',
-        'shopId': 0,
-        'status': 0,
-        'statusStr': '上架',
-        'stores': 30,
-        'userId': 951,
-        'views': 959,
-        'weight': 0.00
-      }
-    }
-
-    // 商品相关数据设置
-    this.goodsDetail = goodsDetail
-    this.selectSizePrice = goodsDetail.basicInfo.minPrice
-    this.buyNumMax = goodsDetail.basicInfo.stores
-    this.buyNumber = this.buyNumMax > 0 ? 1 : 0
-    // 获取购物车商品数量
-    this.shopNum = 1
     this.$apply()
   }
 
