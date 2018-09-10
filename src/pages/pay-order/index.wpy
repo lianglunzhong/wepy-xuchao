@@ -319,7 +319,6 @@ export default class Index extends wepy.page {
     }
 
     this.list = list
-    console.log(this.list)
     this.$apply()
   }
 
@@ -383,8 +382,36 @@ export default class Index extends wepy.page {
       postData.items.push(good)
     })
 
-    console.log(postData)
+    // 提交数据
+    let orderResponse = await api.authRequest({
+      url: 'orders',
+      method: 'POST',
+      data: postData
+    })
+
+    if (orderResponse.statusCode === 422) {
+      wepy.hideLoading()
+      // 提示错误信息
+      let errors = orderResponse.data.errors
+      console.log(errors)
+      return
+    }
+
     wepy.hideLoading()
+    if (orderResponse.statusCode === 200) {
+      // 清空购物车缓存
+      wepy.removeStorageSync('cartItems')
+      // 跳转到订单详情页
+      wepy.redirectTo({
+        url: '/pages/orders/show?id' + orderResponse.data.id
+      })
+    } else {
+      wepy.showModal({
+        title: '提示',
+        content: '创建订单失败！',
+        showCancel: false
+      })
+    }
   }
 }
 </script>

@@ -1,0 +1,119 @@
+<style lang="less">
+page{
+  height: 100%;
+}
+.container{
+  background-color: #f5f5f9;
+  justify-content: initial;
+}
+.form-box{
+  width:100%;
+  background-color: #fff;
+  margin-top: 20rpx;
+}
+.row-wrap{
+  width: 720rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  margin-left: 30rpx;
+  border-bottom: 1rpx solid #eee;
+  display: flex;
+  font-size: 28rpx;
+  /*justify-content: space-between;*/
+}
+.row-wrap .label{
+  width: 160rpx;
+  color: #000
+}
+.row-wrap .label-right{
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+.row-wrap .label-right input{
+  height: 100%;
+  font-size: 28rpx;
+  padding-right: 30rpx;
+}
+.row-wrap .right-box{
+  margin-right: 30rpx;
+}
+.arrow-right{
+  width: 15rpx;
+  height: 24rpx;
+}
+.save-btn,
+.cancel-btn{
+  width: 690rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  margin-top:30rpx;
+  border-radius: 6rpx;
+  box-sizing: border-box;
+}
+.save-btn{
+  background-color: #e64340;
+  color:#fff;
+}
+button[type="default"]{
+  background-color: #ffffff;
+  color:#000;
+}
+.addr-details{
+  height: auto;
+  padding: 30rpx 0;
+  margin-left:30rpx;
+  border-bottom: 1rpx solid #eee;
+  display: flex;
+  font-size: 28rpx;
+}
+.addr-details .label{
+  margin:auto 0 auto 0;
+  width: 160rpx;
+  color: #000
+}
+.addr-details textarea{
+  box-sizing: border-box;
+  width: 480rpx;
+  overflow: scroll;
+}
+picker {
+  min-width: 20rpx;
+  height: 100%;
+  margin-right: 20rpx;
+}
+.hui{
+  color: #777;
+}
+</style>
+<template>
+  <view class="container">
+    <form bindsubmit="bindSave">
+      <view style='width:100%;padding-left:30rpx;font-size: 28rpx;margin-top:30rpx;'>1、同意当前小程序获取我的微信头像；</view>
+      <view style='width:100%;padding-left:30rpx;font-size: 28rpx;margin-top:30rpx;'>2、同意当前小程序获取我的微信昵称等其他信息；</view>
+    <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class="save-btn">授权登录</button>
+    </form>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+
+export default class Authorize extends wepy.page {
+  config = {
+    navigationBarTitleText: '用户信息授权',
+    navigationBarBackgroundColor: '#fafafa'
+  }
+
+  methods = {
+    bindGetUserInfo(e) {
+      if (!e.detail.userInfo) {
+        return
+      }
+      wepy.setStorageSync('userInfo', e.detail.userInfo)
+      wepy.navigateBack()
+    }
+  }
+}
+</script>

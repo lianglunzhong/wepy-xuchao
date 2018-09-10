@@ -392,8 +392,8 @@
               <image src="{{ good.image_url }}" class="goods-thumbnail"/>
           </view>
           <view class="pop-goods-des">
-              <view class="pop-goods-title">{{good.title }}</view>
-              <view class="pop-goods-price">¥ {{ price }}</view>
+              <view class="pop-goods-title">{{ good.title }}</view>
+              <view class="pop-goods-price">¥ {{ good.price }}</view>
           </view>
           <view class="pop-goods-close" @tap="closePopupTap()"></view>
         </view>
@@ -553,11 +553,18 @@ export default class GoodDetailIndex extends wepy.page {
       }
 
       // 组件购买商品的信息
+      let buyData = []
+      let buyGood = {}
+      buyGood.product = this.good
+      buyGood.number = this.buyNumber
+
+      buyData.push(buyGood)
       // 存入缓存中
+      wepy.setStorageSync('buyNowInfo', buyData)
 
       // 跳转到结算页面
       wepy.navigateTo({
-        url: '/pages/to-pay-order/index?orderType=buyNow'
+        url: '/pages/pay-order/index?type=buy_now'
       })
     },
     // 购物车

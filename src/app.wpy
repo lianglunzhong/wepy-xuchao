@@ -28,7 +28,10 @@ export default class extends wepy.app {
       'pages/pay-order/index',
       'pages/address/index',
       'pages/address/create',
-      'pages/my/index'
+      'pages/my/index',
+      'pages/my/authorize',
+      'pages/orders/index',
+      'pages/orders/show'
     ],
     window: {
       backgroundTextStyle: 'light',
