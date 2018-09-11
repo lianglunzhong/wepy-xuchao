@@ -239,7 +239,7 @@
   .goods-info{
     width: 100%;
     background-color: #fff;
-    margin-bottom: 120rpx;
+    margin-bottom: 20rpx;
     padding-bottom: 24rpx;
   }
   .goods-info .row-box{
@@ -292,48 +292,59 @@
     color: #e64340;
     text-align: right;
   }
-
 </style>
 <template>
   <view class="container">
+
     <view class="sec-wrap">
       <view class="address-sec">
         <view class="icon-box">
-          <image class="icon" src="/images/order-details/icon-address.png"></image>
+          <image class="icon" src="/images/order-details/icon-address.png" />
         </view>
         <view class="right-box">
           <view class="name-tel">{{ order.address.contact_name }}  {{ order.address.contact_phone }}</view>
           <view class="text">{{ order.address.address }}</view>
-          </view>
         </view>
-    </view>
-    <view class="goods-list">
-      <view class="list-title">商品信息</view>
-        <block wx:for-items="{{ order.items.data }}" wx:key="{{ index }}">
-          <view class="a-goods">
-            <view class="img-box">
-                <image src="{{ item.product.image_url }}" class="img" />
-            </view>
-            <view class="text-box">
-                <view class="arow arow01">
-                    <view class="goods-name">{{ item.product.title }}</view>
-                    <view class="goods-price">¥ {{ item.price }}</view>
-                </view>
-                <view class="arow">
-                    <view class="goods-label">{{ item.product.label }}</view>
-                    <view class="goods-num">x {{ item.number }}</view>
-                </view>
-            </view>
-          </view>
-        </block>
       </view>
     </view>
+
+    <view class="goods-list">
+      <view class="list-title">商品信息</view>
+      <block wx:for-items="{{ order.items.data }}" wx:key="{{ index }}">
+        <view class="a-goods">
+          <view class="img-box">
+              <image src="{{ item.product.image_url }}" class="img" />
+          </view>
+          <view class="text-box">
+            <view class="arow arow01">
+                <view class="goods-name">{{ item.product.title }}</view>
+                <view class="goods-price">¥ {{ item.price }}</view>
+            </view>
+            <view class="arow">
+                <view class="goods-label">{{ item.product.label }}</view>
+                <view class="goods-num">x {{ item.number }}</view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
     <view class="goods-info">
       <view class="row-box">
         <view class="row-label">商品金额</view>
         <view class="right-text">¥ {{ order.total_amount}}</view>
       </view>
     </view>
+
+    <view class="sec-wrap" wx:if="order.remark" style="margin-top:0px;">
+      <view class="address-sec">
+        <view class="right-box">
+          <view class="name-tel">备注</view>
+          <view class="text">{{ order.remark }}</view>
+        </view>
+      </view>
+    </view>
+
   </view>
 </template>
 
