@@ -403,7 +403,7 @@ export default class Index extends wepy.page {
       wepy.removeStorageSync('cartItems')
       // 跳转到订单详情页
       wepy.redirectTo({
-        url: '/pages/orders/show?id' + orderResponse.data.id
+        url: '/pages/orders/index'
       })
     } else {
       wepy.showModal({

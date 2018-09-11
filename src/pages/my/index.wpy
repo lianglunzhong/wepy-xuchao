@@ -83,7 +83,6 @@ export default class Index extends wepy.page {
   async onLoad() {
     // 未授权
     let res = await this.getSetting()
-    console.log(res)
     if (!res) {
       wepy.navigateTo({
         url: '/pages/my/authorize'
